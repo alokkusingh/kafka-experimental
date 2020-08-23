@@ -8,7 +8,7 @@ Table of Contents
    * [TO-DO](#to-do)
    * [Deployment](#deployment)
 
-## Current Deployments
+## Current Deployment
 - 1 Zookeeper Instance
 - 1 Kafka Broker
 - 2 Producers
@@ -16,8 +16,8 @@ Table of Contents
     - 1 instance of Temperature Sensor
 - 1 Partition
 - 2 Apps
-    - `app-one` - listen to Rain Sensor and Temperature Topics. Consumer group: `app-one`
-    - `app-two` - listen ro Rain Sensor Topic. Consumer group: `app-two`
+    - `app-one` - subscribed to Rain Sensor and Temperature Sensor Topics. Consumer group: `app-one`
+    - `app-two` - subscribed to Rain Sensor Topic. Consumer group: `app-two`
 
 ## TO-DO
 - Add `Docker Swarm` Deployment Steps
@@ -34,4 +34,8 @@ mvn clean package -DskipTests
 
 ````
 docker-compose -d -f docker-compose.yml up --build
+````
+
+````
+docker-compose stop
 ````
