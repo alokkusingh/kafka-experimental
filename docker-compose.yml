@@ -1,0 +1,168 @@
+version: '3.7'
+
+services:
+
+  zookeeper:
+    image: 'confluentinc/cp-zookeeper:5.0.0'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+      - ZOOKEEPER_CLIENT_PORT=2181
+    networks:
+      - kafka
+
+  kafka:
+    image: 'confluentinc/cp-kafka:5.0.0'
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    ports:
+      - '9092:9092'
+    networks:
+      - kafka
+    environment:
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1
+    depends_on:
+      - zookeeper
+
+  rain-sensor:
+    build:
+      context: rain-sensor  # path to eureka Dockerfile directory
+      args:
+        JAR_FILE: target/rain-sensor-1.0-SNAPSHOT.jar # this is the argument passed to Dockerfile
+    hostname: rain-sensor
+    image: alokkusingh/rain-sensor:1.0.0
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - kafka
+    depends_on:
+      - kafka
+
+  temperature-sensor:
+    build:
+      context: temperature-sensor  # path to eureka Dockerfile directory
+      args:
+        JAR_FILE: target/temperature-sensor-1.0-SNAPSHOT.jar # this is the argument passed to Dockerfile
+    hostname: rain-sensor
+    image: alokkusingh/temperature-sensor:1.0.0
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - kafka
+    depends_on:
+      - kafka
+
+  app-one:
+    build:
+      context: app-one  # path to eureka Dockerfile directory
+      args:
+        JAR_FILE: target/app-one-1.0-SNAPSHOT.jar # this is the argument passed to Dockerfile
+    hostname: app-one
+    image: alokkusingh/app-one:1.0.0
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - kafka
+    depends_on:
+      - kafka
+
+  app-two:
+    build:
+      context: app-two  # path to eureka Dockerfile directory
+      args:
+        JAR_FILE: target/app-two-1.0-SNAPSHOT.jar # this is the argument passed to Dockerfile
+    hostname: app-two
+    image: alokkusingh/app-two:1.0.0
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 50M
+        reservations:
+          cpus: '0.25'
+          memory: 20M
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - kafka
+    depends_on:
+      - kafka
+
+networks:
+  kafka:
+  #  driver: overlay
+#volumes:
+#  zookeeper_data:
+#    driver: local
+#  kafka_data:
+#    driver: local

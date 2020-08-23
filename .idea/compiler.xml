@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="app-two" />
+        <module name="temperature-sensor" />
+        <module name="rain-sensor" />
+        <module name="app-one" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="app-one" target="8" />
+      <module name="app-two" target="8" />
+      <module name="kafka-experimental" target="8" />
+      <module name="rain-sensor" target="8" />
+      <module name="temperature-sensor" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="app-one" options="-parameters" />
+      <module name="app-two" options="-parameters" />
+      <module name="kafka-experimental" options="-parameters" />
+      <module name="rain-sensor" options="-parameters" />
+      <module name="temperature-sensor" options="-parameters" />
+    </option>
+  </component>
+</project>
