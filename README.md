@@ -4,7 +4,7 @@ Kafka Experimental using Spring Kafka
 Table of Contents
 =================
 
-   * [Current Deployments](#current-deployments)
+   * [Current Deployment](#current-deployment)
    * [TO-DO](#to-do)
    * [Deployment](#deployment)
 
