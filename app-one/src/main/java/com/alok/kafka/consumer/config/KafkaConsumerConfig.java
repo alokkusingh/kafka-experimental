@@ -1,5 +1,6 @@
 package com.alok.kafka.consumer.config;
 
+import com.alok.kafka.consumer.model.RainData;
 import com.alok.kafka.consumer.model.TemperatureData;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -30,7 +31,7 @@ public class KafkaConsumerConfig {
     private String consumerGroup;
 
     @Bean
-    public ConsumerFactory<String, TemperatureData> consumerFactory() {
+    public ConsumerFactory<String, Object> consumerFactory() {
 
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
@@ -39,22 +40,28 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
         //props.put(JsonDeserializer.USE_TYPE_INFO_HEADERS, false);
-        props.put(JsonDeserializer.TYPE_MAPPINGS, "temperatureData:com.alok.kafka.consumer.model.TemperatureData");
+        props.put(JsonDeserializer.TYPE_MAPPINGS,
+                "temperatureData:com.alok.kafka.consumer.model.TemperatureData, rainData:com.alok.kafka.consumer.model.RainData");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, TemperatureData>
+    public ConcurrentKafkaListenerContainerFactory<String, Object>
     kafkaListenerContainerFactory() {
 
-        ConcurrentKafkaListenerContainerFactory<String, TemperatureData> factory =
+        ConcurrentKafkaListenerContainerFactory<String, Object> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
     @KafkaListener(topics = "temperature", groupId = "app-one")
-    public void listen(TemperatureData message) {
+    public void listenTemperature(TemperatureData message) {
+        System.out.println("Received Message in group app-one: " + message);
+    }
+
+    @KafkaListener(topics = "rain", groupId = "app-one")
+    public void listenRain(RainData message) {
         System.out.println("Received Message in group app-one: " + message);
     }
 }
