@@ -65,4 +65,3 @@ public class KafkaConsumerConfig {
         System.out.println("Received Message in group app-one: " + message);
     }
 }
-
