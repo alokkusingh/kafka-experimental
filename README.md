@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/alokkusingh/kafka-experimental.svg?branch=master)](https://travis-ci.org/github/alokkusingh/kafka-experimental)
+[![GitHub issues](https://img.shields.io/github/issues/alokkusingh/kafka-experimental.svg)](https://github.com/alokkusingh/kafka-experimental/issues)
+[![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/alokkusingh/kafka-experimental.svg?maxAge=2592000)](https://github.com/alokkusingh/kafka-experimental/issues?q=is%3Aissue+is%3Aclosed)
+
 # kafka-experimental
 Kafka Experimental using Spring Kafka
 
