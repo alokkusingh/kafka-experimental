@@ -20,27 +20,34 @@ public class Temprature {
     @Autowired
     private KafkaTemplate<String, TemperatureData> kafkaTemplate;
 
-    public void startRain() {
+    private static final String PRODUCER_ID = UUID.randomUUID().toString();
 
-        TemperatureData rainData = TemperatureData.builder()
+    public void getTemperature() {
+
+        TemperatureData temperatureData = TemperatureData.builder()
                 .id(UUID.randomUUID().toString())
                 .temperature((int)(Math.random() * 1000))
+                .epochTime(System.currentTimeMillis())
                 .build();
 
         ListenableFuture<SendResult<String, TemperatureData>> future =
-                kafkaTemplate.send(topic, rainData);
+                // I am adding PRODUCER_ID as key (optional) - In case topic is broken to multiple partitions
+                // and producer has multiple instances running
+                // the same key will make sure the message is sent to the same partition always
+                // in order to achive ordering of the messages.
+                kafkaTemplate.send(topic, PRODUCER_ID,  temperatureData);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, TemperatureData>>() {
 
             @Override
             public void onSuccess(SendResult<String, TemperatureData> result) {
-                System.out.println("Sent message=[" + rainData +
+                System.out.println("Sent message=[" +  temperatureData +
                         "] with offset=[" + result.getRecordMetadata().offset() + "]");
             }
             @Override
             public void onFailure(Throwable ex) {
                 System.out.println("Unable to send message=["
-                        + rainData + "] due to : " + ex.getMessage());
+                        +  temperatureData + "] due to : " + ex.getMessage());
             }
         });
     }

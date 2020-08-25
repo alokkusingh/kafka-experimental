@@ -15,6 +15,6 @@ public class ScheduleRain {
 
     @Scheduled(cron = "0 * * * * ?")
     public void scheduleRainReading() throws Exception {
-        rain.startRain();
+        rain.readRainData();
     }
 }

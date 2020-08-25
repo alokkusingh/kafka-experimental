@@ -4,10 +4,12 @@ import lombok.*;
 
 @Data
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class RainData {
     private String id;
     private Integer millimeters;
+    private Long epochTime;
+
 }

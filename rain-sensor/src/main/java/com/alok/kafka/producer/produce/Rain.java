@@ -20,15 +20,22 @@ public class Rain {
     @Autowired
     private KafkaTemplate<String, RainData> kafkaTemplate;
 
-    public void startRain() {
+    private static final String PRODUCER_ID = UUID.randomUUID().toString();
+
+    public void readRainData() {
 
         RainData rainData = RainData.builder()
                 .id(UUID.randomUUID().toString())
                 .millimeters((int)(Math.random() * 1000))
+                .epochTime(System.currentTimeMillis())
                 .build();
 
         ListenableFuture<SendResult<String, RainData>> future =
-                kafkaTemplate.send(topic, rainData);
+                // I am adding PRODUCER_ID as key (optional) - In case topic is broken to multiple partitions
+                // and producer has multiple instances running
+                // the same key will make sure the message is sent to the same partition always
+                // in order to achive ordering of the messages.
+                kafkaTemplate.send(topic, PRODUCER_ID, rainData);
 
         future.addCallback(new ListenableFutureCallback<SendResult<String, RainData>>() {
 

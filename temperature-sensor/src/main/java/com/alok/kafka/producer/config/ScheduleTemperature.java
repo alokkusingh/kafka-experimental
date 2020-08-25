@@ -15,6 +15,6 @@ public class ScheduleTemperature {
 
     @Scheduled(cron = "30 * * * * ?")
     public void scheduleTemperatureReading() throws Exception {
-        temprature.startRain();
+        temprature.getTemperature();
     }
 }

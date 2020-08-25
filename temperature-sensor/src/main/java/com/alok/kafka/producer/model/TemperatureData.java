@@ -4,10 +4,12 @@ import lombok.*;
 
 @Data
 @Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class TemperatureData {
     private String id;
     private Integer temperature;
+    private Long epochTime;
+
 }
