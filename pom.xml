@@ -71,11 +71,15 @@
         </plugins>
     </build>
     
-    <repository>
-        <id>github-avro</id>
-        <name>GitHub Packages</name>
-        <url>https://maven.pkg.github.com/alokkusingh/avro-serializer</url>
-    </repository>
+    <repositories>
+        <repository>
+            <id>github-avro</id>
+            <name>Avro Serializer by Alok Singh</name>
+            <url>https://maven.pkg.github.com/alokkusingh/avro-serializer</url>
+        </repository>
+    </repositories>
+    
+    
 
   <modules>
     <module>rain-sensor</module>
