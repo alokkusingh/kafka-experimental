@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "namespace": "com.alok.kafka.avro",
+  "name": "RainData",
+  "fields": [
+    { "name": "id", "type": "string", "doc": "Id" },
+    { "name": "millimeters", "type": "int" , "doc": "Millimeters Rained"},
+    { "name": "epochTime", "type": "long" , "doc": "Epoch Time"}
+  ]
+ }

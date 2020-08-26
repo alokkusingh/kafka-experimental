@@ -17,6 +17,11 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="github-avro" />
+      <option name="name" value="GitHub OWNER Apache Maven Packages" />
+      <option name="url" value="https://maven.pkg.github.com/alokkusingh/avro-serializer" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="github" />
       <option name="name" value="GitHub OWNER Apache Maven Packages" />
       <option name="url" value="https://maven.pkg.github.com/alokkusingh/mygate-account-reconciler" />

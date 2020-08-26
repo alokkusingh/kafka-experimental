@@ -1,6 +1,6 @@
 package com.alok.kafka.producer.produce;
 
-import com.alok.kafka.producer.model.TemperatureData;
+import com.alok.kafka.avro.TemperatureData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -24,10 +24,10 @@ public class Temprature {
 
     public void getTemperature() {
 
-        TemperatureData temperatureData = TemperatureData.builder()
-                .id(UUID.randomUUID().toString())
-                .temperature((int)(Math.random() * 1000))
-                .epochTime(System.currentTimeMillis())
+        TemperatureData temperatureData = TemperatureData.newBuilder()
+                .setId(UUID.randomUUID().toString())
+                .setTemperature((int)(Math.random() * 1000))
+                .setEpochTime(System.currentTimeMillis())
                 .build();
 
         ListenableFuture<SendResult<String, TemperatureData>> future =

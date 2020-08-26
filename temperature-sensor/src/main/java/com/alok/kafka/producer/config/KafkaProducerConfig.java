@@ -1,6 +1,7 @@
 package com.alok.kafka.producer.config;
 
-import com.alok.kafka.producer.model.TemperatureData;
+import com.alok.kafka.avro.AvroSerializer;
+import com.alok.kafka.avro.TemperatureData;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +27,10 @@ public class KafkaProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        configProps.put(JsonSerializer.TYPE_MAPPINGS, "temperatureData:com.alok.kafka.producer.model.TemperatureData");
+        //configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroSerializer.class);
+        //configProps.put(JsonSerializer.TYPE_MAPPINGS, "temperatureData:com.alok.kafka.producer.model.TemperatureData");
+        configProps.put(JsonSerializer.TYPE_MAPPINGS, "temperatureData:com.alok.kafka.avro.TemperatureData");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }

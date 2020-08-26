@@ -1,6 +1,6 @@
 package com.alok.kafka.producer.produce;
 
-import com.alok.kafka.producer.model.RainData;
+import com.alok.kafka.avro.RainData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -24,10 +24,10 @@ public class Rain {
 
     public void readRainData() {
 
-        RainData rainData = RainData.builder()
-                .id(UUID.randomUUID().toString())
-                .millimeters((int)(Math.random() * 1000))
-                .epochTime(System.currentTimeMillis())
+        RainData rainData = RainData.newBuilder()
+                .setId(UUID.randomUUID().toString())
+                .setMillimeters((int)(Math.random() * 1000))
+                .setEpochTime(System.currentTimeMillis())
                 .build();
 
         ListenableFuture<SendResult<String, RainData>> future =
