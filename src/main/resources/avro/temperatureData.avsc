@@ -1,0 +1,10 @@
+{
+  "type": "record",
+  "namespace": "com.alok.kafka.avro",
+  "name": "TemperatureData",
+  "fields": [
+    { "name": "id", "type": "string", "doc": "Id" },
+    { "name": "temperature", "type": "int" , "doc": "Temperature"},
+    { "name": "epochTime", "type": "long" , "doc": "Epoch Time"}
+  ]
+ }

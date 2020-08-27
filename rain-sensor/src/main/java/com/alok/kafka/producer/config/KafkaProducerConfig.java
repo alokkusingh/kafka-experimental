@@ -1,6 +1,7 @@
 package com.alok.kafka.producer.config;
 
-import com.alok.kafka.producer.model.RainData;
+import com.alok.kafka.avro.AvroSerializer;
+import com.alok.kafka.avro.RainData;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +26,9 @@ public class KafkaProducerConfig {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        configProps.put(JsonSerializer.TYPE_MAPPINGS, "rainData:com.alok.kafka.producer.model.RainData");
+        //configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroSerializer.class);
+        configProps.put(JsonSerializer.TYPE_MAPPINGS, "rainData:com.alok.kafka.avro.RainData");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }
