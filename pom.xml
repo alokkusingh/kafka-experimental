@@ -60,7 +60,7 @@
         <dependency>
             <groupId>com.alok.kafka</groupId>
             <artifactId>avro-serializer</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
         <!--<dependency>
             <groupId>org.apache.avro</groupId>
@@ -106,8 +106,8 @@
             <url>https://maven.pkg.github.com/alokkusingh/avro-serializer</url>
         </repository>
     </repositories>
-    
-    
+
+
 
   <modules>
     <module>rain-sensor</module>
