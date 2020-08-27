@@ -7,7 +7,7 @@ Kafka Experimental using Spring Kafka and Apache Avro.
 
 Using `Apache Avro` for model generation for Producer and Consumer. 
 
-Using my own `Avro Serializer` utility library [https://github.com/alokkusingh/avro-serializer/packages/373458]() to Serialize/Deserialize Avro model objects without using `Schema Registry`.
+Using my own `Avro Serializer` utility library [https://github.com/alokkusingh/avro-serializer/packages/373458](https://github.com/alokkusingh/avro-serializer/packages/373458) to Serialize/Deserialize Avro model objects without using `Schema Registry`.
 
 Table of Contents
 =================
