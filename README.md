@@ -3,7 +3,11 @@
 [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/alokkusingh/kafka-experimental.svg?maxAge=2592000)](https://github.com/alokkusingh/kafka-experimental/issues?q=is%3Aissue+is%3Aclosed)
 
 # kafka-experimental
-Kafka Experimental using Spring Kafka
+Kafka Experimental using Spring Kafka and Apache Avro.
+
+Using `Apache Avro` for model generation for Producer and Consumer. 
+
+Using my own `Avro Serializer` utility library [https://github.com/alokkusingh/avro-serializer/packages/373458]() to Serialize/Deserialize Avro model objects without using `Schema Registry`.
 
 Table of Contents
 =================
@@ -15,11 +19,11 @@ Table of Contents
 ## Current Deployment
 - 1 Zookeeper Instance
 - 1 Kafka Broker
-- 2 Producers
-    - 1 instance of Rain Sensor
-    - 1 instance of Temperature Sensor
+- 2 Producers - you may scale up using `docker-compose` scale command
+    - 1 instance of Rain Sensor 
+    - 1 instance of Temperature Sensor - you may scale up using `docker-compose` scale command
 - 1 Partition
-- 2 Apps
+- 2 Apps - you may scale up using `docker-compose` scale command. This will be useless as of now as we have single `Partition`.
     - `app-one` - subscribed to Rain Sensor and Temperature Sensor Topics. Consumer group: `app-one`
     - `app-two` - subscribed to Rain Sensor Topic. Consumer group: `app-two`
 
@@ -32,14 +36,22 @@ Table of Contents
 
 ## Deployment
 
+### Build the Maven Artifact
 ````
-mvn clean package -DskipTests
+mvn clean package
 ````
 
+### Deploy the docker services
 ````
 docker-compose -d -f docker-compose.yml up --build
 ````
 
+### Stop the docker services
 ````
 docker-compose stop
+````
+
+### Scale up/down/stop one or more docker service
+````
+docker-compose -f docker-compose.yml scale app-two=0
 ````
