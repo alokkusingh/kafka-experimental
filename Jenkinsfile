@@ -47,11 +47,11 @@ pipeline {
                 expression {return DO_NOT_SKIP_BUILD == 'true' }
             }
             steps {
-                def pom = readMavenPom 'app-one/pom.xml'
-                ARTIFACT = pom.artifactId
-                VERSION = pom.version
-                echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
                 script {
+                    def pom = readMavenPom 'app-one/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
                     if (BRANCH == 'master') {
                         sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=app-one/target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} app-one/."
                     } else if (BRANCH == 'dev') {
@@ -68,10 +68,10 @@ pipeline {
                 expression {return DO_NOT_SKIP_BUILD == 'true' }
             }
             steps {
-                def pom = readMavenPom 'app-one/pom.xml'
-                ARTIFACT = pom.artifactId
-                VERSION = pom.version
                 script {
+                    def pom = readMavenPom 'app-one/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
                     if (BRANCH == 'master') {
                         sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION}"
                         sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:latest"
