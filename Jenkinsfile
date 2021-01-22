@@ -13,8 +13,8 @@ pipeline {
         AWS_CLI_KEY = getAwsCliKey(BRANCH)
         AWS_CLI_SECRET = getAwsCliSecret(BRANCH)
         //Use Pipeline Utility Steps plugin to read information from pom.xml into env variables - pipeline-utility-steps plugin
-        ARTIFACT = readMavenPom().getArtifactId()
-        VERSION = readMavenPom().getVersion()
+        //ARTIFACT = readMavenPom().getArtifactId()
+        //VERSION = readMavenPom().getVersion()
         DO_NOT_SKIP_BUILD = doNotSkipBuild(BRANCH)
     }
 
@@ -49,6 +49,7 @@ pipeline {
             steps {
                 script {
                     def pom = readMavenPom 'app-one/pom.xml'
+                    echo 'pom.version'
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
