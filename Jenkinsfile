@@ -49,7 +49,7 @@ pipeline {
             steps {
                 script {
                     module = 'app-one'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
@@ -71,7 +71,7 @@ pipeline {
             steps {
                 script {
                     module = 'app-one'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     if (BRANCH == 'master') {
@@ -94,7 +94,7 @@ pipeline {
             steps {
                 script {
                     module = 'app-two'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
@@ -116,7 +116,7 @@ pipeline {
             steps {
                 script {
                     module = 'app-one'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     if (BRANCH == 'master') {
@@ -139,7 +139,7 @@ pipeline {
             steps {
                 script {
                     module = 'rain-sensor'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
@@ -161,7 +161,7 @@ pipeline {
             steps {
                 script {
                     module = 'rain-sensor'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     if (BRANCH == 'master') {
@@ -184,7 +184,7 @@ pipeline {
             steps {
                 script {
                     module = 'temperature-sensor'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
@@ -206,7 +206,7 @@ pipeline {
             steps {
                 script {
                     module = 'temperature-sensor'
-                    def pom = readMavenPom file: '${module}/pom.xml'
+                    def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     if (BRANCH == 'master') {
