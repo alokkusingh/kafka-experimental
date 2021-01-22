@@ -48,15 +48,15 @@ pipeline {
             }
             steps {
                 script {
-                    def pom = readMavenPom file: 'app-one/pom.xml'
-                    echo 'pom.version'
+                    module = 'app-one'
+                    def pom = readMavenPom file: '${module}/pom.xml'
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
                     if (BRANCH == 'master') {
-                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} app-one/."
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
                     } else if (BRANCH == 'dev') {
-                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ."
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
                     } else {
                         echo "Don't know how to create image for ${env.GIT_BRANCH} branch"
                     }
@@ -70,7 +70,8 @@ pipeline {
             }
             steps {
                 script {
-                    def pom = readMavenPom file: 'app-one/pom.xml'
+                    module = 'app-one'
+                    def pom = readMavenPom file: '${module}/pom.xml'
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     if (BRANCH == 'master') {
@@ -85,6 +86,163 @@ pipeline {
                 }
             }
         }
+
+        stage ('Build Docker Image app-two') {
+            when {
+                expression {return DO_NOT_SKIP_BUILD == 'true' }
+            }
+            steps {
+                script {
+                    module = 'app-two'
+                    def pom = readMavenPom file: '${module}/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
+                    if (BRANCH == 'master') {
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
+                    } else if (BRANCH == 'dev') {
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
+                    } else {
+                        echo "Don't know how to create image for ${env.GIT_BRANCH} branch"
+                    }
+                }
+            }
+        }
+
+        stage ('Push Docker Image app-two') {
+            when {
+                expression {return DO_NOT_SKIP_BUILD == 'true' }
+            }
+            steps {
+                script {
+                    module = 'app-one'
+                    def pom = readMavenPom file: '${module}/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    if (BRANCH == 'master') {
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION}"
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:latest"
+                    } else if (BRANCH == 'dev') {
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION}"
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest"
+                    } else {
+                        echo "Don't know which image to push ${env.BRANCH_NAME} branch"
+                    }
+                }
+            }
+        }
+
+        stage ('Build Docker Image rain-sensor') {
+            when {
+                expression {return DO_NOT_SKIP_BUILD == 'true' }
+            }
+            steps {
+                script {
+                    module = 'rain-sensor'
+                    def pom = readMavenPom file: '${module}/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
+                    if (BRANCH == 'master') {
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
+                    } else if (BRANCH == 'dev') {
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
+                    } else {
+                        echo "Don't know how to create image for ${env.GIT_BRANCH} branch"
+                    }
+                }
+            }
+        }
+
+        stage ('Push Docker Image rain-sensor') {
+            when {
+                expression {return DO_NOT_SKIP_BUILD == 'true' }
+            }
+            steps {
+                script {
+                    module = 'rain-sensor'
+                    def pom = readMavenPom file: '${module}/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    if (BRANCH == 'master') {
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION}"
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:latest"
+                    } else if (BRANCH == 'dev') {
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION}"
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest"
+                    } else {
+                        echo "Don't know which image to push ${env.BRANCH_NAME} branch"
+                    }
+                }
+            }
+        }
+
+        stage ('Build Docker Image temperature-sensor') {
+            when {
+                expression {return DO_NOT_SKIP_BUILD == 'true' }
+            }
+            steps {
+                script {
+                    module = 'temperature-sensor'
+                    def pom = readMavenPom file: '${module}/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
+                    if (BRANCH == 'master') {
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
+                    } else if (BRANCH == 'dev') {
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ${module}/."
+                    } else {
+                        echo "Don't know how to create image for ${env.GIT_BRANCH} branch"
+                    }
+                }
+            }
+        }
+
+        stage ('Push Docker Image temperature-sensor') {
+            when {
+                expression {return DO_NOT_SKIP_BUILD == 'true' }
+            }
+            steps {
+                script {
+                    module = 'temperature-sensor'
+                    def pom = readMavenPom file: '${module}/pom.xml'
+                    ARTIFACT = pom.artifactId
+                    VERSION = pom.version
+                    if (BRANCH == 'master') {
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION}"
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:latest"
+                    } else if (BRANCH == 'dev') {
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION}"
+                        sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest"
+                    } else {
+                        echo "Don't know which image to push ${env.BRANCH_NAME} branch"
+                    }
+                }
+            }
+        }
+    }
+}
+
+def getBranchName() {
+    if (env.BRANCH_NAME.startsWith('PR')) {
+        return "${env.CHANGE_BRANCH}"
+    } else {
+        return "${env.BRANCH_NAME}"
+    }
+}
+
+def getEnvName(branchName) {
+    if( branchName == "master") {
+        return "prod";
+    } else if (branchName == "dev") {
+        return "dev";
+    } else {
+        return "future";
+    }
+}
+
+def doNotSkipBuild(branchName) {
     }
 }
 
