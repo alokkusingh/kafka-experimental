@@ -42,17 +42,20 @@ pipeline {
             }
         }
 
-        stage ('Build Docker Image') {
+        stage ('Build Docker Image app-one') {
             when {
                 expression {return DO_NOT_SKIP_BUILD == 'true' }
             }
             steps {
+                def pom = readMavenPom 'app-one/pom.xml'
+                ARTIFACT = pom.artifactId
+                VERSION = pom.version
                 echo "Building ${ARTIFACT} - ${VERSION} - ${ENV_NAME}"
                 script {
                     if (BRANCH == 'master') {
-                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ."
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION} --build-arg JAR_FILE=app-one/target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} app-one/."
                     } else if (BRANCH == 'dev') {
-                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ."
+                        sh "docker build -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:latest -t ${DOCKER_REGISTRY}/${ARTIFACT}-dev:${VERSION} --build-arg JAR_FILE=app-one/target/${ARTIFACT}-${VERSION}.jar --build-arg ENV_NAME=${ENV_NAME} ."
                     } else {
                         echo "Don't know how to create image for ${env.GIT_BRANCH} branch"
                     }
@@ -60,11 +63,14 @@ pipeline {
             }
         }
 
-        stage ('Push Docker Image') {
+        stage ('Push Docker Image app-one') {
             when {
                 expression {return DO_NOT_SKIP_BUILD == 'true' }
             }
             steps {
+                def pom = readMavenPom 'app-one/pom.xml'
+                ARTIFACT = pom.artifactId
+                VERSION = pom.version
                 script {
                     if (BRANCH == 'master') {
                         sh "docker push ${DOCKER_REGISTRY}/${ARTIFACT}:${VERSION}"
