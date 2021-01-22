@@ -224,27 +224,6 @@ pipeline {
     }
 }
 
-def getBranchName() {
-    if (env.BRANCH_NAME.startsWith('PR')) {
-        return "${env.CHANGE_BRANCH}"
-    } else {
-        return "${env.BRANCH_NAME}"
-    }
-}
-
-def getEnvName(branchName) {
-    if( branchName == "master") {
-        return "prod";
-    } else if (branchName == "dev") {
-        return "dev";
-    } else {
-        return "future";
-    }
-}
-
-def doNotSkipBuild(branchName) {
-    }
-}
 
 def getBranchName() {
     if (env.BRANCH_NAME.startsWith('PR')) {
