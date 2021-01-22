@@ -48,7 +48,7 @@ pipeline {
             }
             steps {
                 script {
-                    def pom = readMavenPom 'app-one/pom.xml'
+                    def pom = readMavenPom file: 'app-one/pom.xml'
                     echo 'pom.version'
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
@@ -70,7 +70,7 @@ pipeline {
             }
             steps {
                 script {
-                    def pom = readMavenPom 'app-one/pom.xml'
+                    def pom = readMavenPom file: 'app-one/pom.xml'
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
                     if (BRANCH == 'master') {
