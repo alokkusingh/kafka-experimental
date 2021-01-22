@@ -115,7 +115,7 @@ pipeline {
             }
             steps {
                 script {
-                    module = 'app-one'
+                    module = 'app-two'
                     def pom = readMavenPom file: "${module}/pom.xml"
                     ARTIFACT = pom.artifactId
                     VERSION = pom.version
