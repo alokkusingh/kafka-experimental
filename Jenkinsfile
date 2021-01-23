@@ -25,7 +25,7 @@ pipeline {
             }
             steps {
                 withMaven(maven : 'maven-3-6-3') {
-                    sh './mvnw clean jxr:jxr verify package surefire-report:report-only'
+                    sh './mvnw clean jxr:jxr verify sonar:sonar package surefire-report:report-only'
                 }
             }
         }
