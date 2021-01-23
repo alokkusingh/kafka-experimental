@@ -28,11 +28,6 @@ pipeline {
                     sh './mvnw clean jxr:jxr verify sonar:sonar package surefire-report:report-only'
                 }
             }
-            post {
-                always {
-                    junit '**//*target/surefire-reports/*.xml'
-                }
-            }
         }
 
         stage ('Deploy Artifact') {
