@@ -16,7 +16,7 @@ Table of Contents
    * [TO-DO](#to-do)
    * [Deployment](#deployment)
 
-## Current Deployment
+## Current Deployment 
 - 1 Zookeeper Instance
 - 1 Kafka Broker
 - 2 Producers - you may scale up using `docker-compose` scale command
@@ -32,7 +32,10 @@ Table of Contents
 - Add Multiple `Kafka Broker`
 - Add Multiple `Partition`
 - Add Multiple `Instances` of Each Apps
-- Add `Apache Avro` Schema Registry
+- Add `Apache Avro` Schema Registry - currently Avro is used only for object mapping. Without schema registry schema versioning won't be possible
+
+## Few Notes
+- Producer creates topic on startup using "NewTopic" by providing "Number of Partitions" and "Replication Factor"
 
 ## Deployment
 
