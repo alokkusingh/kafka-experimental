@@ -23,7 +23,7 @@ Table of Contents
     - 1 instance of Rain Sensor 
     - 1 instance of Temperature Sensor - you may scale up using `docker-compose` scale command
 - 1 Partition
-- 2 Apps - you may scale up using `docker-compose` scale command. This will be useless uless we have multiple `Partition`s.
+- 2 Apps (`consumer`s from 2 diffrenet `consumer group`) - you may scale up using `docker-compose` scale command. This will be useless uless we have multiple `Partition`s.
     - `app-one` - subscribed to Rain Sensor and Temperature Sensor Topics. Consumer group: `app-one`
     - `app-two` - subscribed to Rain Sensor Topic. Consumer group: `app-two`
 
