@@ -26,6 +26,7 @@ Table of Contents
 - 2 Apps - you may scale up using `docker-compose` scale command. This will be useless uless we have multiple `Partition`s.
     - `app-one` - subscribed to Rain Sensor and Temperature Sensor Topics. Consumer group: `app-one`
     - `app-two` - subscribed to Rain Sensor Topic. Consumer group: `app-two`
+- Apache Avro used as schema definition to serialize and deserialize the message. Avro schema definition is maintained locally, no schema registry was used.
 
 ## TO-DO
 - Add `Docker Swarm` Deployment Steps
